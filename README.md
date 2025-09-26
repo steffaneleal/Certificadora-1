@@ -26,6 +26,7 @@ A **Plataforma de Oficinas Online para o TEDI** será um ambiente digital educat
 ---
 ## Pessoas desenvolvedoras do projeto
 - [Ellian Maciel Moreira Ribeiro](https://github.com/Ellian-Ribeiro) (Ellian-Ribeiro)
+- [Filipe Antonio de Lima Nogueira](https://github.com/filipelimma/) (filipelimma)
 - [Gabriel Augusto Morisaki Rita](https://github.com/gasakiri/) (gasakiri)
 - [Steffane Leal Silva Santos](https://github.com/steffaneleal/) (steffaneleal)
 - [Vithoria Cabreira](https://github.com/cabreiraTech) (cabreiraTech)
