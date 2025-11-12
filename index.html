@@ -5,12 +5,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEDI - Tutoriais</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/src/css/main.css">
+    <link rel="stylesheet" href="/src/css/header.css">
+
     <script src="/src/js/main.js" defer></script>
+
+
 </head>
 
 <body>
+<!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/src/img/tedi_logo.jpg" alt="Logo TEDI" width="150">
+            </div>
+            <nav class="header-nav">
+                <ul>
+                    <li><a href="cadastro-estudante.html">Cadastre-se</a></li>
+                </ul>
+                <div class="voluntario-dropdown">
+                    <ul>
+                        <li><a href="">Quer ser voluntário?</a></li>
+                    </ul>
+                    <div class="dropdown">
+                        <p>Para se voluntariar, mande e-mail para: <span
+                                        style="color: var(--cor-primaria);"><b>e-maildotedi</b></span></p> 
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
 
+    <!-- FORM -->
+    <main class="container">
+        <div class="form-container">
+            <h2 class="form-title">Login</h2>
+            <form action="home.html" method="get">
+                <div class="form-group">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Seu e-mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-input" placeholder="Sua senha" required>
+                </div>
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <input type="checkbox" id="lembrar" name="lembrar">
+                        <label for="lembrar">Lembrar de mim</label>
+                    </div>
+                    <a href="#" style="color: var(--cor-primaria);">Esqueceu a senha?</a>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;" onclick="setarCredenciais(event)">Entrar</button>
+            </form>
+            <p style="text-align: center; margin-top: 1.5rem;">
+                Não tem uma conta? <a href="cadastro-estudante.html" style="color: var(--cor-primaria);">Cadastre-se</a>
+            </p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-logo">TEDI</div>
+                <p>Tecnologia e Educação Digital para a Terceira Idade.</p>
+                <div class="social-icons" style="margin-top: 1rem;">
+                    <a href="#">https://www.instagram.com/projeto_tedi<i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Contato</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> e-maildotedi</li>
+                    <li><i class="fas fa-phone"></i> (43) 92003-1098</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Cornélio Procópio, PR</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 TEDI - Tecnologia e Educação Digital para a Terceira Idade</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/index.js"></script>
 </body>
 
 </html>
