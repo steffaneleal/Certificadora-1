@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oficinas - TEDI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header/Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <h1 class="logo">TEDI</h1>
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="oficinas.html" class="active">Oficinas</a></li>
+          <li><a href="minha-conta.html" id="nav-user-link" style="display: none;">Minha Conta</a></li>
+          <li><a href="#" id="nav-logout-btn" style="display: none;">Sair</a></li>
+          <li><a href="login.html" id="nav-login-link">Entrar</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <h1>Catálogo de Oficinas</h1>
+      <p class="page-subtitle">Escolha o nível e tema que mais te interessa</p>
+
+      <!-- Filters -->
+      <section class="filters">
+        <h2>Filtrar por Nível</h2>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="todos">Todas</button>
+          <button class="filter-btn" data-filter="basico">Básico</button>
+          <button class="filter-btn" data-filter="intermediario">Intermediário</button>
+          <button class="filter-btn" data-filter="avancado">Avançado</button>
+        </div>
+      </section>
+
+      <!-- Workshops Grid -->
+      <section class="workshops-grid" id="workshops-container">
+        <!-- Preenchido por JavaScript -->
+      </section>
+    </div>
+  </main>
+
+  <!-- Modal de Inscrição -->
+  <div id="inscricao-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modal-title">Detalhes da Oficina</h2>
+      
+      <div id="modal-body">
+        <!-- Preenchido por JavaScript -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="inscrever-btn" class="btn btn-primary">Inscrever-se</button>
+        <button class="btn btn-secondary close-modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Login (para inscrição) -->
+  <div id="login-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Faça Login para se Inscrever</h2>
+      <p>Você precisa estar logado para se inscrever em uma oficina.</p>
+      
+      <form id="login-inscricao-form">
+        <div class="form-group">
+          <label for="login-email-modal">E-mail:</label>
+          <input type="email" id="login-email-modal" name="email" placeholder="Digite seu e-mail" required>
+        </div>
+        <div class="form-group">
+          <label for="login-senha-modal">Senha:</label>
+          <input type="password" id="login-senha-modal" name="senha" placeholder="Digite sua senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+
+      <p class="small-text">Não tem conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>TEDI</h3>
+        <p>Tecnologia e Educação Digital para a Terceira Idade</p>
+      </div>
+      <div class="footer-section">
+        <h3>Links Rápidos</h3>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="oficinas.html">Oficinas</a></li>
+          <li><a href="login.html">Entrar</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contato</h3>
+        <p>Email: contato@tedi.com.br</p>
+        <p>Instagram: @projeto_tedi</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 TEDI - Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="oficinas.js"></script>
+</body>
+</html>
