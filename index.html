@@ -1,100 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEDI - Tutoriais</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="/src/css/main.css">
-    <link rel="stylesheet" href="/src/css/header.css">
-
-    <script src="/src/js/main.js" defer></script>
-
-
 </head>
-
 <body>
-<!-- HEADER -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="/src/img/tedi_logo.jpg" alt="Logo TEDI" width="150">
+    <main>
+        <!-- HEADER -->
+        <header>
+            <div class="header-logo">
+                <p>TEDI</p>
             </div>
-            <nav class="header-nav">
-                <ul>
-                    <li><a href="cadastro-estudante.html">Cadastre-se</a></li>
-                </ul>
-                <div class="voluntario-dropdown">
-                    <ul>
-                        <li><a href="">Quer ser voluntário?</a></li>
-                    </ul>
-                    <div class="dropdown">
-                        <p>Para se voluntariar, mande e-mail para: <span
-                                        style="color: var(--cor-primaria);"><b>e-maildotedi</b></span></p> 
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
 
-    <!-- FORM -->
-    <main class="container">
-        <div class="form-container">
-            <h2 class="form-title">Login</h2>
-            <form action="home.html" method="get">
-                <div class="form-group">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="Seu e-mail" required>
+            <div class="header-nav">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="oficinas.html">Oficinas</a></li>
+                        <li><a href="quem-somos.html">Quem Somos</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="header-login">
+                <a href="">login.html</a>
+            </div>
+        </header>
+
+
+
+        <!-- Conteúdo -->
+        <section id="conteudo1">
+            <div class="conteudo1-text">
+                <h1>TEDI</h1>
+                <h2>Tecnologia e Educação Digital para a Terceira Idade</h2>
+                <p>Reduzindo a exclusão digital e capacitando idosos através de oficinas online acessíveis e inclusivas.</p>
+            </div>
+
+            <div class="conteudo1-botoes">
+                <a href="oficinas.html">Explorar Oficinas</a>
+
+                <a href="quem-somos.html">Saiba Mais</a>
+            </div>
+        </section>
+
+
+
+        <!-- Sobre o TEDI -->
+        <section id="conteudo2">
+            <h2>Sobre o TEDI</h2>
+
+            <div id="conteudo2-cards">
+                <div class="card">
+                    <h3>Educação Digital</h3>
+                    <p>Oficinas práticas sobre uso de computador, smartphone e segurança digital, desenvolvidas especialmente para idosos.</p>
                 </div>
-                <div class="form-group">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" id="senha" name="senha" class="form-input" placeholder="Sua senha" required>
+
+                <div class="card">
+                    <h3>Inclusão Social</h3>
+                    <p>Criamos um ambiente solidário e conectado para que idosos aprendam, se desenvolvam e se sintam parte da comunidade digital.</p>
                 </div>
-                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <input type="checkbox" id="lembrar" name="lembrar">
-                        <label for="lembrar">Lembrar de mim</label>
-                    </div>
-                    <a href="#" style="color: var(--cor-primaria);">Esqueceu a senha?</a>
+
+                <div class="card">
+                    <h3>Acessibilidade</h3>
+                    <p>Design acessível com navegação simples, linguagem clara e foco nas necessidades do público idoso.</p>
                 </div>
-                <button type="submit" class="btn" style="width: 100%;" onclick="setarCredenciais(event)">Entrar</button>
-            </form>
-            <p style="text-align: center; margin-top: 1.5rem;">
-                Não tem uma conta? <a href="cadastro-estudante.html" style="color: var(--cor-primaria);">Cadastre-se</a>
-            </p>
-        </div>
+            </div>
+        </section>
+
+
+
+        <!-- O que oferecemos -->
+        <section id="conteudo3">
+            <h2>O que oferecemos</h2>
+
+            <div class="conteudo3-oferecimentos">
+                <ul>
+                    <li class="conteudo3-oferecimentos-item">
+                        <h3>Cursos de Smartphone</h3>
+                        <p>Aprenda desde o básico até funcionalidades avançadas do seu celular. Desde ligar o aparelho até usar aplicativos úteis.</p>
+                    </li>
+                    <li class="conteudo3-oferecimentos-item">
+                        <h3>Cursos de Computador</h3>
+                        <p>Domine o uso básico e prático de computadores e internet. Navegação, email, documentos e muito mais.</p>
+                    </li>
+                    <li class="conteudo3-oferecimentos-item">
+                        <h3>Segurança Digital</h3>
+                        <p>Proteja-se contra fraudes, golpes e aprenda boas práticas para navegar com segurança na internet.</p>
+                    </li>
+                    <li class="conteudo3-oferecimentos-item">
+                        <h3>Eventos Solidários</h3>
+                        <p>Participe de eventos especiais, encontros informais e atividades interativas com a comunidade TEDI.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- Ver Oficinas -->
+        <section id="conteudo4">
+            <h2>Pronto para Começar?</h2>
+            <p>Inscreva-se em uma de nossas oficinas e comece a sua jornada digital.</p>
+
+            <a href="oficinas.html">Ver Todas as Oficinas</a>
+        </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-info">
-                <div class="footer-logo">TEDI</div>
-                <p>Tecnologia e Educação Digital para a Terceira Idade.</p>
-                <div class="social-icons" style="margin-top: 1rem;">
-                    <a href="#">https://www.instagram.com/projeto_tedi<i class="fab fa-instagram"></i></a>
-                </div>
+    <footer id="footer">
+        <div class="footer-infos">
+            <div class="footer-infos-block">
+                <h3>TEDI</h3>
+                <p>Tecnologia e Educação Digital para a Terceira Idade</p>
             </div>
-            
-            <div class="footer-links">
+
+            <div class="footer-infos-block">
+                <h3>Links</h3>
+                <nav>
+                    <a href="inicio.html">Início</a>
+                    <a href="oficinas.html">Oficinas</a>
+                    <a href="quem-somos.html">Quem Somos</a>
+                </nav>
+            </div>
+
+            <div class="footer-infos-block">
+                <h3>Redes Sociais</h3>
+                <nav>
+                    <a href="https://www.instagram.com/projeto_tedi"><i class="fab fa-instagram">Instagram</i></a>
+                    <a href="#">Facebook</a>
+                    <a href="#">E-mail</a>
+                </nav>
+            </div>
+
+            <div class="footer-infos-block">
                 <h3>Contato</h3>
-                <ul>
-                    <li><i class="fas fa-envelope"></i> e-maildotedi</li>
-                    <li><i class="fas fa-phone"></i> (43) 92003-1098</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Cornélio Procópio, PR</li>
-                </ul>
+                <p>
+                    UTFPR - Campus Cornélio Procópio
+                    <br>
+                    Av. Alberto Carazzai, 1640
+                    <br>
+                    Cornélio Procópio - PR
+                </p>
             </div>
         </div>
-
-        <div class="footer-bottom">
+        <hr>
+        <div class="footer-marca">
             <p>© 2025 TEDI - Tecnologia e Educação Digital para a Terceira Idade</p>
         </div>
     </footer>
-
-    <!-- JAVASCRIPT -->
-    <script src="js/index.js"></script>
 </body>
-
 </html>
