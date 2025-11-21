@@ -31,12 +31,7 @@ A **Plataforma de Oficinas Online para o TEDI** será um ambiente digital educat
  npm install
  ```
 
- 2. Crie o arquivo de ambiente a partir do exemplo e ajuste os valores:
-
- ```bash
- cp .env.example .env
- # editar .env com seu editor: DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PORT
- ```
+ 2. Crie o arquivo .env e edite com os dados encontrados em .env.example
 
  3. Crie o banco e as tabelas (se ainda não existirem):
 
