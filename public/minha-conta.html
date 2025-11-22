@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Conta - TEDI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header/Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <h1 class="logo">TEDI</h1>
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="oficinas.html">Oficinas</a></li>
+          <li><a href="minha-conta.html" id="nav-user-link" class="active">Minha Conta</a></li>
+          <li><a href="#" id="nav-logout-btn">Sair</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <h1>Minha Conta</h1>
+
+      <!-- User Info Section -->
+      <section class="user-info-section">
+        <h2>Informações da Conta</h2>
+        <div class="user-info-card">
+          <p><strong>Nome:</strong> <span id="user-name"></span></p>
+          <p><strong>E-mail:</strong> <span id="user-email"></span></p>
+          <p><strong>Telefone:</strong> <span id="user-phone"></span></p>
+          <button id="edit-profile-btn" class="btn btn-secondary">Editar Perfil</button>
+        </div>
+      </section>
+
+      <!-- Inscriptions Section -->
+      <section class="inscriptions-section">
+        <h2>Minhas Inscrições</h2>
+        <div id="inscriptions-container">
+          <!-- Preenchido por JavaScript -->
+        </div>
+      </section>
+
+      <!-- Completed Section -->
+      <section class="completed-section">
+        <h2>Oficinas Concluídas</h2>
+        <div id="completed-container">
+          <!-- Preenchido por JavaScript -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div id="edit-profile-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Editar Perfil</h2>
+      
+      <form id="edit-profile-form">
+        <div class="form-group">
+          <label for="edit-nome">Nome completo:</label>
+          <input type="text" id="edit-nome" name="nome" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-email">E-mail:</label>
+          <input type="email" id="edit-email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-telefone">Telefone:</label>
+          <input type="tel" id="edit-telefone" name="telefone">
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        <button type="button" class="btn btn-secondary close-modal">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>TEDI</h3>
+        <p>Tecnologia e Educação Digital para a Terceira Idade</p>
+      </div>
+      <div class="footer-section">
+        <h3>Links Rápidos</h3>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="oficinas.html">Oficinas</a></li>
+          <li><a href="minha-conta.html">Minha Conta</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contato</h3>
+        <p>Email: contato@tedi.com.br</p>
+        <p>Instagram: @projeto_tedi</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 TEDI - Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="minha-conta.js"></script>
+</body>
+</html>
