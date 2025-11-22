@@ -418,6 +418,68 @@ function setupEventListeners() {
     signupBtn.addEventListener('click', openSignupModal);
   }
 
+  // Menu Hambúrguer
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  
+  // Criar overlay se não existir
+  let menuOverlay = document.querySelector('.menu-overlay');
+  if (!menuOverlay) {
+    menuOverlay = document.createElement('div');
+    menuOverlay.className = 'menu-overlay';
+    document.body.appendChild(menuOverlay);
+  }
+  
+  function toggleMenu() {
+    const isActive = navLinks.classList.contains('active');
+    navLinks.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
+    
+    const icon = menuToggle.querySelector('i');
+    if (icon) {
+      if (!isActive) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    }
+  }
+  
+  function closeMenu() {
+    navLinks.classList.remove('active');
+    menuOverlay.classList.remove('active');
+    const icon = menuToggle.querySelector('i');
+    if (icon) {
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  }
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+    
+    // Fechar menu ao clicar no overlay
+    menuOverlay.addEventListener('click', closeMenu);
+    
+    // Fechar menu ao clicar em um link
+    const links = navLinks.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+    
+    // Fechar menu ao pressionar ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        closeMenu();
+      }
+    });
+  }
+
   // Modais
   setupModalListeners();
 }

@@ -7,6 +7,7 @@
   
   <!-- Estilos -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <!-- Header/Navbar -->
@@ -14,7 +15,10 @@
     <div class="container">
       <nav>
         <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">TEDI</a></div>
-        <ul class="nav-links">
+        <button class="menu-toggle" aria-label="Menu" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
           <li><a href="index.html">Início</a></li>
           <li><a href="oficinas.html" class="active">Oficinas</a></li>
           <li><a href="quem-somos.html">Quem Somos</a></li>
@@ -37,10 +41,10 @@
 
   <!-- Página Oficinas -->
   <main>
-    <section style="background: linear-gradient(135deg, rgba(143, 200, 228, 0.2) 0%, rgba(143, 200, 228, 0.1) 100%); padding: 40px 0;">
+    <section class="hero-section" style="background: linear-gradient(135deg, rgba(143, 200, 228, 0.2) 0%, rgba(143, 200, 228, 0.1) 100%);">
       <div class="container">
         <h1>Nossas Oficinas</h1>
-        <p style="font-size: 18px;">Escolha uma oficina e comece a aprender. Todas as oficinas são gratuitas e acessíveis.</p>
+        <p class="hero-subtitle">Escolha uma oficina e comece a aprender. Todas as oficinas são gratuitas e acessíveis.</p>
       </div>
     </section>
 

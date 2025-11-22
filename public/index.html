@@ -15,7 +15,10 @@
     <div class="container">
       <nav>
         <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">TEDI</a></div>
-        <ul class="nav-links">
+        <button class="menu-toggle" aria-label="Menu" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
           <li><a href="index.html">Início</a></li>
           <li><a href="oficinas.html">Oficinas</a></li>
           <li><a href="quem-somos.html">Quem Somos</a></li>
@@ -39,14 +42,14 @@
   <!-- Página Início -->
   <main data-page="home">
     <!-- Hero Section -->
-    <section style="background: linear-gradient(135deg, rgba(143, 200, 228, 0.2) 0%, rgba(143, 200, 228, 0.1) 100%); padding: 60px 0;">
+    <section class="hero-section" style="background: linear-gradient(135deg, rgba(143, 200, 228, 0.2) 0%, rgba(143, 200, 228, 0.1) 100%);">
       <div class="container text-center">
-        <h1 style="font-size: 48px; margin-bottom: 20px;">TEDI</h1>
+        <h1 class="hero-title">TEDI</h1>
         <h2 style="color: var(--primary-dark); margin-bottom: 20px;">Tecnologia e Educação Digital para a Terceira Idade</h2>
-        <p style="font-size: 18px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <p class="hero-subtitle" style="max-width: 600px; margin-left: auto; margin-right: auto;">
           Reduzindo a exclusão digital e capacitando idosos através de oficinas online acessíveis e inclusivas.
         </p>
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <div class="hero-buttons">
           <a href="oficinas.html" class="btn btn-primary btn-large">Explorar Oficinas</a>
           <a href="quem-somos.html" class="btn btn-secondary btn-large">Saiba Mais</a>
         </div>
@@ -82,29 +85,29 @@
       <div class="container">
         <h2 class="section-title">O que Oferecemos</h2>
         <div style="max-width: 800px; margin: 0 auto;">
-          <div style="display: flex; gap: 20px; margin-bottom: 30px;">
-            <div style="font-size: 36px; min-width: 50px;"><i class="fa-solid fa-mobile-button" style="color: #5fa8c4;"></i></div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-mobile-button"></i></div>
             <div>
               <h3>Cursos de Smartphone</h3>
               <p>Aprenda desde o básico até funcionalidades avançadas do seu celular. Desde ligar o aparelho até usar aplicativos úteis.</p>
             </div>
           </div>
-          <div style="display: flex; gap: 20px; margin-bottom: 30px;">
-            <div style="font-size: 36px; min-width: 50px;"><i class="fa-solid fa-laptop" style="color: #5fa8c4;"></i></div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-laptop"></i></div>
             <div>
               <h3>Cursos de Computador</h3>
               <p>Domine o uso básico e prático de computadores e internet. Navegação, email, documentos e muito mais.</p>
             </div>
           </div>
-          <div style="display: flex; gap: 20px; margin-bottom: 30px;">
-            <div style="font-size: 36px; min-width: 50px;"><i class="fa-solid fa-lock" style="color: #5fa8c4;"></i></div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
             <div>
               <h3>Segurança Digital</h3>
               <p>Proteja-se contra fraudes, golpes e aprenda boas práticas para navegar com segurança na internet.</p>
             </div>
           </div>
-          <div style="display: flex; gap: 20px;">
-            <div style="font-size: 36px; min-width: 50px;"><i class="fa-solid fa-heart" style="color: #5fa8c4;"></i></div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
             <div>
               <h3>Eventos Solidários</h3>
               <p>Participe de eventos especiais, encontros informais e atividades interativas com a comunidade TEDI.</p>
@@ -135,7 +138,7 @@
 
     <section>
       <div class="container">
-        <div style="display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid var(--primary-light); flex-wrap: wrap;">
+        <div class="admin-tabs">
           <button data-admin-tab="enrollments" class="btn btn-primary active" style="border: none; background: none; color: var(--primary-color); padding: 10px 0; border-bottom: 3px solid var(--primary-color);">Inscrições</button>
           <button data-admin-tab="volunteers" class="btn btn-secondary" style="border: none; background: none; color: var(--dark-gray); padding: 10px 0;">Voluntários</button>
           <button data-admin-tab="workshops" class="btn btn-secondary" style="border: none; background: none; color: var(--dark-gray); padding: 10px 0;">Criar Oficina</button>
