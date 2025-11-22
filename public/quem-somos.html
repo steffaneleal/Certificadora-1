@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oficinas - TEDI</title>
-  
+  <title>Quem Somos - TEDI</title>
+
   <!-- Estilos -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -16,8 +16,8 @@
         <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">TEDI</a></div>
         <ul class="nav-links">
           <li><a href="index.html">Início</a></li>
-          <li><a href="oficinas.html" class="active">Oficinas</a></li>
-          <li><a href="quem-somos.html">Quem Somos</a></li>
+          <li><a href="oficinas.html">Oficinas</a></li>
+          <li><a href="quem-somos.html" class="active">Quem Somos</a></li>
         </ul>
         <div class="nav-auth">
           <div id="auth-section">
@@ -35,40 +35,83 @@
     </div>
   </header>
 
-  <!-- Página Oficinas -->
+  <!-- Página Quem Somos -->
   <main>
     <section style="background: linear-gradient(135deg, rgba(143, 200, 228, 0.2) 0%, rgba(143, 200, 228, 0.1) 100%); padding: 40px 0;">
       <div class="container">
-        <h1>Nossas Oficinas</h1>
-        <p style="font-size: 18px;">Escolha uma oficina e comece a aprender. Todas as oficinas são gratuitas e acessíveis.</p>
+        <h1>Quem Somos</h1>
+        <p style="font-size: 18px;">Conheça o projeto TEDI e nossa missão.</p>
       </div>
     </section>
 
     <section>
-      <div class="container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          <div class="form-group">
-            <label for="filter-level">Nível:</label>
-            <select id="filter-level">
-              <option value="">Todos os níveis</option>
-              <option value="basic">Básico</option>
-              <option value="intermediate">Intermediário</option>
-              <option value="advanced">Avançado</option>
-            </select>
+      <div class="container" style="max-width: 900px;">
+        <h2>Sobre o Projeto TEDI</h2>
+        <p>
+          O TEDI (Tecnologia e Educação Digital para a Terceira Idade) é um projeto de extensão universitária 
+          desenvolvido pela Universidade Tecnológica Federal do Paraná (UTFPR) em Cornélio Procópio. 
+          Nossa missão é reduzir a exclusão digital e capacitar idosos para que possam aproveitar os benefícios 
+          da tecnologia de forma segura e confiante.
+        </p>
+
+        <h2 style="margin-top: 40px;">Nossos Objetivos</h2>
+        <ul style="margin-left: 20px; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Reduzir a desigualdade digital entre idosos e outras faixas etárias</li>
+          <li style="margin-bottom: 10px;">Capacitar idosos com habilidades digitais essenciais</li>
+          <li style="margin-bottom: 10px;">Incluir idosos na esfera tecnológica de forma segura</li>
+          <li style="margin-bottom: 10px;">Promover educação inclusiva e acessível</li>
+        </ul>
+
+        <h2 style="margin-top: 40px;">Departamentos</h2>
+        <div class="grid grid-2" style="margin-bottom: 20px;">
+          <div class="card">
+            <h3>Marketing</h3>
+            <p>Divulgação do projeto, criação de posts para redes sociais e desenvolvimento da identidade visual.</p>
           </div>
-          <div class="form-group">
-            <label for="filter-category">Categoria:</label>
-            <select id="filter-category">
-              <option value="">Todas as categorias</option>
-              <option value="Computador">Computador</option>
-              <option value="Smartphone">Smartphone</option>
-              <option value="Segurança Digital">Segurança Digital</option>
-              <option value="Eventos">Eventos Solidários</option>
-            </select>
+          <div class="card">
+            <h3>Materiais Personalizados</h3>
+            <p>Planejamento de gincanas, atividades interativas e criação de material lúdico acessível.</p>
+          </div>
+          <div class="card">
+            <h3>Materiais Didáticos</h3>
+            <p>Planejamento de aulas, criação de apostilas e garantia da qualidade dos cursos.</p>
+          </div>
+          <div class="card">
+            <h3>Liderança/Administração</h3>
+            <p>Planejamento de reuniões, gerenciamento de integrantes e parte burocrática do projeto.</p>
           </div>
         </div>
 
-        <div id="workshops-list" class="grid grid-3"></div>
+        <h2 style="margin-top: 40px;">Coordenação</h2>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Coordenadora de Extensão</h3>
+            <p><strong>Professora Camila Dias</strong><br>DACOM-CP<br>IHC e Qualidade de Software</p>
+          </div>
+          <div class="card">
+            <h3>Vice-coordenadora</h3>
+            <p><strong>Professora Gisele Alves Santana</strong><br>DACOM-CP<br>Programação Orientada a Objetos</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top: 40px;">Redes Sociais e Contato</h2>
+        <p>
+          Siga-nos nas redes sociais para acompanhar nossas atividades e eventos:
+        </p>
+        <ul style="margin-left: 20px;">
+          <li style="margin-bottom: 10px;">
+            <strong>Instagram:</strong> <a href="https://instagram.com/projeto_tedi" target="_blank">@projeto_tedi</a>
+          </li>
+          <li style="margin-bottom: 10px;">
+            <strong>Facebook:</strong> <a href="https://facebook.com/projeto.tedi" target="_blank">TEDI - Tecnologia e Educação Digital para a Terceira Idade</a>
+          </li>
+        </ul>
+
+        <p style="margin-top: 40px; padding: 20px; background-color: var(--light-gray); border-radius: var(--border-radius);">
+          <strong>Universidade Tecnológica Federal do Paraná</strong><br>
+          Campus Cornélio Procópio<br>
+          Departamento de Computação (DACOM)
+        </p>
       </div>
     </section>
   </main>
@@ -203,6 +246,6 @@
   </footer>
 
   <script src="js/common.js"></script>
-  <script src="js/oficinas.js"></script>
+  <script src="js/quem-somos.js"></script>
 </body>
 </html>
