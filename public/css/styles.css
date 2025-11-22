@@ -64,6 +64,7 @@
   html {
     scroll-behavior: smooth;
     font-size: var(--font-size-base);
+    height: 100%;
   }
   
   body {
@@ -73,6 +74,9 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   /* ============================================
@@ -137,6 +141,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    flex-shrink: 0;
   }
   
   nav {
@@ -342,6 +347,14 @@
   }
   
   /* ============================================
+     Main
+     ============================================ */
+  
+  main {
+    flex: 1 0 auto;
+  }
+  
+  /* ============================================
      Seções
      ============================================ */
   
@@ -391,7 +404,8 @@
     background-color: rgba(143, 200, 228, 0.1);
     border-top: 2px solid var(--primary-light);
     padding: var(--spacing-2xl) 0;
-    margin-top: var(--spacing-2xl);
+    flex-shrink: 0;
+    margin-top: auto;
   }
   
   .footer-content {
