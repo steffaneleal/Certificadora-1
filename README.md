@@ -11,7 +11,15 @@
 * [Conclusão](#conclusão)
 
 ## 📌 Descrição do projeto
-A **Plataforma de Oficinas Online para o TEDI** será um ambiente digital educativo direcionado ao público idoso, com o propósito de reduzir a exclusão digital por meio de oficinas síncronas e assíncronas, materiais multimídia acessíveis e suporte humano (monitores e instrutores)
+A **Plataforma de Oficinas Online para o TEDI** é um ambiente digital educativo direcionado ao público idoso, com o propósito de reduzir a exclusão digital por meio de oficinas síncronas e assíncronas, materiais multimídia acessíveis e suporte humano (monitores e instrutores).
+
+### Funcionalidades
+- ✅ Sistema de cadastro e autenticação de usuários
+- ✅ Gerenciamento de oficinas (criação, edição, listagem)
+- ✅ Sistema de inscrições em oficinas
+- ✅ Painel administrativo para gestão completa
+- ✅ Interface responsiva e acessível
+- ✅ Filtros por nível e categoria de oficinas
 
 
  ## Estrutura do projeto
@@ -31,23 +39,37 @@ A **Plataforma de Oficinas Online para o TEDI** será um ambiente digital educat
  npm install
  ```
 
- 2. Crie o arquivo .env e edite com os dados encontrados em .env.example
+2. Crie o arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
- 3. Crie o banco e as tabelas (se ainda não existirem):
+```env
+DB_HOST=localhost
+DB_USER=seu_usuario_mysql
+DB_PASSWORD=sua_senha_mysql
+DB_NAME=tedi_workshops
+PORT=3000
+```
 
- ```bash
- mysql -u <seu_usuario> -p < schema.sql
- ```
+3. Crie o banco e as tabelas (se ainda não existirem):
 
- 4. Inicie o servidor em modo de desenvolvimento:
+```bash
+mysql -u <seu_usuario> -p < schema.sql
+```
 
- ```bash
- npm run dev
- ```
+4. Inicie o servidor em modo de desenvolvimento:
 
- 5. Acesse o frontend no navegador:
+```bash
+npm run dev
+```
 
- - http://localhost:3000/
+5. Acesse o frontend no navegador:
+
+- **Frontend:** http://localhost:3000/
+
+### 🔐 Credenciais de Acesso
+
+**Perfil Administrativo:**
+- **Email:** `admin@tedi.com`
+- **Senha:** `admin123`
 
 
 ## Pessoas desenvolvedoras do projeto
@@ -63,4 +85,16 @@ Este projeto está licenciado sob a Licença MIT — veja o arquivo [LICENSE](LI
 
 
 ## 🔚 Conclusão
+
+A Plataforma de Oficinas Online para o TEDI foi desenvolvida com foco na acessibilidade e usabilidade para o público idoso, oferecendo uma interface intuitiva e recursos que facilitam o aprendizado digital. O sistema permite o gerenciamento completo de oficinas, usuários e inscrições, proporcionando uma experiência educativa inclusiva e eficiente.
+
+### Tecnologias Utilizadas
+- **Backend:** Node.js, Express.js
+- **Banco de Dados:** MySQL
+- **Frontend:** HTML5, CSS3, JavaScript 
+- **Autenticação:** bcrypt para hash de senhas
+- **Gerenciamento de Variáveis:** dotenv
+
+### Status do Projeto
+✅ **Projeto Finalizado** 
 
