@@ -357,7 +357,6 @@ const AppState = {
       userId: AppState.currentUser.id,
       workshopId,
       enrolledAt: new Date().toISOString(),
-      completed: false,
     };
   
     AppState.enrollments.push(enrollment);
@@ -456,7 +455,7 @@ const AppState = {
   
     const header = table.createTHead();
     const headerRow = header.insertRow();
-    ['Usuário', 'Oficina', 'Data de Inscrição', 'Status'].forEach(text => {
+    ['Usuário', 'Oficina', 'Data de Inscrição'].forEach(text => {
       const cell = headerRow.insertCell();
       cell.textContent = text;
       cell.style.padding = '12px';
@@ -476,7 +475,6 @@ const AppState = {
         user?.name || 'Desconhecido',
         workshop?.title || 'Desconhecida',
         new Date(enrollment.enrolledAt).toLocaleDateString('pt-BR'),
-        enrollment.completed ? 'Concluída' : 'Pendente',
       ];
   
       cells.forEach(text => {
@@ -577,6 +575,13 @@ const AppState = {
     const user = AppState.users.find(u => u.id === userId);
     if (!user) {
       showAlert('Usuário não encontrado!', 'error');
+      return;
+    }
+
+    // Verificar se o usuário já está cadastrado como voluntário
+    const existingVolunteer = AppState.volunteers.find(v => v.userId === userId);
+    if (existingVolunteer) {
+      showAlert('Este usuário já está cadastrado como voluntário!', 'error');
       return;
     }
   

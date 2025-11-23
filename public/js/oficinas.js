@@ -95,7 +95,6 @@ function enrollWorkshop(workshopId) {
     userId: AppState.currentUser.id,
     workshopId,
     enrolledAt: new Date().toISOString(),
-    completed: false,
   };
 
   AppState.enrollments.push(enrollment);

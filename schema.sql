@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS inscricoes (
   usuario_id INT NOT NULL,
   oficina_id INT NOT NULL,
   data_inscricao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  status ENUM('ativa', 'cancelada', 'concluida') DEFAULT 'ativa',
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
   FOREIGN KEY (oficina_id) REFERENCES oficinas(id) ON DELETE CASCADE,
   UNIQUE KEY unique_inscricao (usuario_id, oficina_id),
