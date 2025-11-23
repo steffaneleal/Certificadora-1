@@ -342,6 +342,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     margin-bottom: var(--spacing-md);
     min-height: 4.5rem;
@@ -981,6 +982,7 @@
     .card-body > p:first-child {
       min-height: auto;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
     }
     
     /* Formulários */
