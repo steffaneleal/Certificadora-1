@@ -257,7 +257,15 @@ function handleAdminLogin(e) {
     document.getElementById("admin-login-form").reset();
     updateUI();
     showAlert("Login administrativo realizado com sucesso!", "success");
-    window.location.href = "index.html#admin";
+    // Navigate to admin view without reloading the page so the panel
+    // is rendered immediately (avoid requiring F5)
+    try {
+      window.location.hash = "admin";
+      if (typeof navigateTo === "function") navigateTo("admin");
+    } catch (e) {
+      // fallback to a full navigation if something goes wrong
+      window.location.href = "index.html#admin";
+    }
   } else {
     showAlert("Email ou senha de administrador inválidos!", "error");
   }
@@ -506,6 +514,31 @@ function setupEventListeners() {
       }
     });
   }
+
+  // Intercept clicks on any anchor that links to the admin hash
+  // so we can navigate in-SPA when already on index.html (no reload).
+  document.addEventListener("click", (e) => {
+    const anchor = e.target.closest('a[href*="#admin"]');
+    if (!anchor) return;
+
+    const isIndexPage =
+      window.location.pathname.includes("index.html") ||
+      window.location.pathname === "/" ||
+      window.location.pathname.endsWith("/");
+
+    if (isIndexPage) {
+      e.preventDefault();
+      try {
+        window.location.hash = "admin";
+        if (typeof navigateTo === "function") navigateTo("admin");
+      } catch (err) {
+        // fallback: allow default navigation
+      }
+    } else {
+      // Not on index page: allow the link to navigate to index.html#admin
+      // (default browser behavior will handle it).
+    }
+  });
 
   // Modais
   setupModalListeners();
