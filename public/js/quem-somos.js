@@ -1,11 +1,10 @@
 // PÁGINA QUEM SOMOS
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Garantir que o conteúdo principal esteja visível
-  const main = document.querySelector('main');
+  const main = document.querySelector("main");
   if (main) {
-    main.classList.remove('hidden');
-    main.style.display = 'block';
+    main.classList.remove("hidden");
+    main.style.display = "block";
   }
 });
-

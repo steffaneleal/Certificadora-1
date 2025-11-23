@@ -52,7 +52,7 @@ PORT=3000
 3. Crie o banco e as tabelas (se ainda não existirem):
 
 ```bash
-mysql -u <seu_usuario> -p < schema.sql
+mysql -u <seu_usuario> -p < tedi.sql
 ```
 
 4. Inicie o servidor em modo de desenvolvimento:

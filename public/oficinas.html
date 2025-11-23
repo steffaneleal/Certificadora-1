@@ -1,209 +1,284 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oficinas - TEDI</title>
-  
-  <!-- Estilos -->
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="shortcut icon" href="./assets/img/logo-tedi-text.png" type="image/x-icon">
-</head>
-<body>
-  <!-- Header/Navbar -->
-  <header>
-    <div class="container">
-      <nav>
-        <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">TEDI</a></div>
-        <button class="menu-toggle" aria-label="Menu" id="menu-toggle">
-          <i class="fas fa-bars"></i>
-        </button>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="index.html">Início</a></li>
-          <li><a href="oficinas.html" class="active">Oficinas</a></li>
-          <li><a href="quem-somos.html">Quem Somos</a></li>
-          <li><a href="quem-somos.html#contato">Contato</a></li>
-        </ul>
-        <div class="nav-auth">
-          <div id="auth-section">
-            <button id="login-btn" class="btn btn-primary btn-small">Login</button>
-          </div>
-          <div id="user-section" class="hidden">
-            <span class="user-info">Olá, <strong id="user-name">Usuário</strong></span>
-            <button id="logout-btn" class="btn btn-secondary btn-small">Sair</button>
-          </div>
-          <div id="admin-section" class="hidden">
-            <a href="index.html#admin" class="btn btn-primary btn-small">Painel Admin</a>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oficinas - TEDI</title>
 
-  <!-- Página Oficinas -->
-  <main>
-    <section class="hero-section" style="background: linear-gradient(135deg, rgba(143, 200, 228, 0.2) 0%, rgba(143, 200, 228, 0.1) 100%);">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="./assets/img/logo-tedi-text.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <!-- Header/Navbar -->
+    <header>
       <div class="container">
-        <h1>Nossas Oficinas</h1>
-        <p class="hero-subtitle">Escolha uma oficina e comece a aprender. Todas as oficinas são gratuitas e acessíveis.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          <div class="form-group">
-            <label for="filter-level">Nível:</label>
-            <select id="filter-level">
-              <option value="">Todos os níveis</option>
-              <option value="basic">Básico</option>
-              <option value="intermediate">Intermediário</option>
-              <option value="advanced">Avançado</option>
-            </select>
+        <nav>
+          <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit"
+              >TEDI</a
+            >
           </div>
-          <div class="form-group">
-            <label for="filter-category">Categoria:</label>
-            <select id="filter-category">
-              <option value="">Todas as categorias</option>
-              <option value="Computador">Computador</option>
-              <option value="Smartphone">Smartphone</option>
-              <option value="Segurança Digital">Segurança Digital</option>
-              <option value="Eventos">Eventos Solidários</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="workshops-list" class="grid grid-3"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modais -->
-  <!-- Modal de Login -->
-  <div id="login-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Login de Usuário</h2>
-        <button class="close-btn">&times;</button>
-      </div>
-      <form id="login-form">
-        <div class="form-group">
-          <label for="login-email">Email:</label>
-          <input type="email" id="login-email" required>
-        </div>
-        <div class="form-group">
-          <label for="login-password">Senha:</label>
-          <input type="password" id="login-password" required>
-        </div>
-        <div class="form-group">
-          <p style="font-size: 14px; color: var(--dark-gray);">
-            Não tem conta? <a href="#" onclick="document.getElementById('login-modal').classList.remove('active'); document.getElementById('signup-modal').classList.add('active'); return false;">Cadastre-se aqui</a>
-          </p>
-          <p style="font-size: 14px; color: var(--dark-gray);">
-            É administrador? <a href="#" onclick="document.getElementById('login-modal').classList.remove('active'); document.getElementById('admin-login-modal').classList.add('active'); return false;">Faça login aqui</a>
-          </p>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal de Cadastro -->
-  <div id="signup-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Cadastro de Usuário</h2>
-        <button class="close-btn">&times;</button>
-      </div>
-      <form id="signup-form">
-        <div class="form-group">
-          <label for="signup-name">Nome Completo:</label>
-          <input type="text" id="signup-name" required>
-        </div>
-        <div class="form-group">
-          <label for="signup-email">Email:</label>
-          <input type="email" id="signup-email" required>
-        </div>
-        <div class="form-group">
-          <label for="signup-password">Senha:</label>
-          <input type="password" id="signup-password" required>
-        </div>
-        <div class="form-group">
-          <label for="signup-confirm-password">Confirmar Senha:</label>
-          <input type="password" id="signup-confirm-password" required>
-        </div>
-        <div class="form-group">
-          <p style="font-size: 14px; color: var(--dark-gray);">
-            Já tem conta? <a href="#" onclick="document.getElementById('signup-modal').classList.remove('active'); document.getElementById('login-modal').classList.add('active'); return false;">Faça login aqui</a>
-          </p>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Cadastrar</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal de Login Admin -->
-  <div id="admin-login-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Login Administrativo</h2>
-        <button class="close-btn">&times;</button>
-      </div>
-      <form id="admin-login-form">
-        <div class="form-group">
-          <label for="admin-email">Email:</label>
-          <input type="email" id="admin-email" required>
-        </div>
-        <div class="form-group">
-          <label for="admin-password">Senha:</label>
-          <input type="password" id="admin-password" required>
-        </div>
-        <div class="form-group">
-          <p style="font-size: 14px; color: var(--dark-gray);">
-            Usuário comum? <a href="#" onclick="document.getElementById('admin-login-modal').classList.remove('active'); document.getElementById('login-modal').classList.add('active'); return false;">Faça login aqui</a>
-          </p>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>TEDI</h4>
-          <p>Tecnologia e Educação Digital para a Terceira Idade</p>
-        </div>
-        <div class="footer-section">
-          <h4>Links</h4>
-          <ul>
+          <button class="menu-toggle" aria-label="Menu" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Início</a></li>
-            <li><a href="oficinas.html">Oficinas</a></li>
+            <li><a href="oficinas.html" class="active">Oficinas</a></li>
             <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="quem-somos.html#contato">Contato</a></li>
           </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Redes Sociais</h4>
-          <ul>
-            <li><a href="https://instagram.com/projeto_tedi" target="_blank">Instagram</a></li>
-            <li><a href="https://facebook.com/projeto.tedi" target="_blank">Facebook</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Contato</h4>
-          <p>Universidade Tecnológica Federal do Paraná<br>Cornélio Procópio, PR</p>
-        </div>
+          <div class="nav-auth">
+            <div id="auth-section">
+              <button id="login-btn" class="btn btn-primary btn-small">
+                Login
+              </button>
+            </div>
+            <div id="user-section" class="hidden">
+              <span class="user-info"
+                >Olá, <strong id="user-name">Usuário</strong></span
+              >
+              <button id="logout-btn" class="btn btn-secondary btn-small">
+                Sair
+              </button>
+            </div>
+            <div id="admin-section" class="hidden">
+              <a href="index.html#admin" class="btn btn-primary btn-small"
+                >Painel Admin</a
+              >
+            </div>
+          </div>
+        </nav>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 TEDI - Todos os direitos reservados</p>
+    </header>
+
+    <!-- Página Oficinas -->
+    <main>
+      <section
+        class="hero-section"
+        style="
+          background: linear-gradient(
+            135deg,
+            rgba(143, 200, 228, 0.2) 0%,
+            rgba(143, 200, 228, 0.1) 100%
+          );
+        "
+      >
+        <div class="container">
+          <h1>Nossas Oficinas</h1>
+          <p class="hero-subtitle">
+            Escolha uma oficina e comece a aprender. Todas as oficinas são
+            gratuitas e acessíveis.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 20px;
+              margin-bottom: 30px;
+            "
+          >
+            <div class="form-group">
+              <label for="filter-level">Nível:</label>
+              <select id="filter-level">
+                <option value="">Todos os níveis</option>
+                <option value="basic">Básico</option>
+                <option value="intermediate">Intermediário</option>
+                <option value="advanced">Avançado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="filter-category">Categoria:</label>
+              <select id="filter-category">
+                <option value="">Todas as categorias</option>
+                <option value="Computador">Computador</option>
+                <option value="Smartphone">Smartphone</option>
+                <option value="Segurança Digital">Segurança Digital</option>
+                <option value="Eventos">Eventos Solidários</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="workshops-list" class="grid grid-3"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modais -->
+    <!-- Modal de Login -->
+    <div id="login-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Login de Usuário</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Senha:</label>
+            <input type="password" id="login-password" required />
+          </div>
+          <div class="form-group">
+            <p style="font-size: 14px; color: var(--dark-gray)">
+              Não tem conta?
+              <a
+                href="#"
+                onclick="document.getElementById('login-modal').classList.remove('active'); document.getElementById('signup-modal').classList.add('active'); return false;"
+                >Cadastre-se aqui</a
+              >
+            </p>
+            <p style="font-size: 14px; color: var(--dark-gray)">
+              É administrador?
+              <a
+                href="#"
+                onclick="document.getElementById('login-modal').classList.remove('active'); document.getElementById('admin-login-modal').classList.add('active'); return false;"
+                >Faça login aqui</a
+              >
+            </p>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Entrar
+          </button>
+        </form>
       </div>
     </div>
-  </footer>
 
-  <script src="js/common.js"></script>
-  <script src="js/oficinas.js"></script>
-</body>
+    <!-- Modal de Cadastro -->
+    <div id="signup-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Cadastro de Usuário</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <form id="signup-form">
+          <div class="form-group">
+            <label for="signup-name">Nome Completo:</label>
+            <input type="text" id="signup-name" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email:</label>
+            <input type="email" id="signup-email" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Senha:</label>
+            <input type="password" id="signup-password" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-confirm-password">Confirmar Senha:</label>
+            <input type="password" id="signup-confirm-password" required />
+          </div>
+          <div class="form-group">
+            <p style="font-size: 14px; color: var(--dark-gray)">
+              Já tem conta?
+              <a
+                href="#"
+                onclick="document.getElementById('signup-modal').classList.remove('active'); document.getElementById('login-modal').classList.add('active'); return false;"
+                >Faça login aqui</a
+              >
+            </p>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal de Login Admin -->
+    <div id="admin-login-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Login Administrativo</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <form id="admin-login-form">
+          <div class="form-group">
+            <label for="admin-email">Email:</label>
+            <input type="email" id="admin-email" required />
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Senha:</label>
+            <input type="password" id="admin-password" required />
+          </div>
+          <div class="form-group">
+            <p style="font-size: 14px; color: var(--dark-gray)">
+              Usuário comum?
+              <a
+                href="#"
+                onclick="document.getElementById('admin-login-modal').classList.remove('active'); document.getElementById('login-modal').classList.add('active'); return false;"
+                >Faça login aqui</a
+              >
+            </p>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Entrar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>TEDI</h4>
+            <p>Tecnologia e Educação Digital para a Terceira Idade</p>
+          </div>
+          <div class="footer-section">
+            <h4>Links</h4>
+            <ul>
+              <li><a href="index.html">Início</a></li>
+              <li><a href="oficinas.html">Oficinas</a></li>
+              <li><a href="quem-somos.html">Quem Somos</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Redes Sociais</h4>
+            <ul>
+              <li>
+                <a href="https://instagram.com/projeto_tedi" target="_blank"
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a href="https://facebook.com/projeto.tedi" target="_blank"
+                  >Facebook</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contato</h4>
+            <p>
+              Universidade Tecnológica Federal do Paraná<br />Cornélio Procópio,
+              PR
+            </p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 TEDI - Todos os direitos reservados</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/oficinas.js"></script>
+  </body>
 </html>

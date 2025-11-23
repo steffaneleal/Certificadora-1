@@ -17,8 +17,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "mysql2": "^3.6.5",
-    "bcrypt": "^5.1.1"
-    ,"dotenv": "^16.1.4"
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
