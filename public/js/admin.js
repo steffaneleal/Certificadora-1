@@ -2,6 +2,30 @@
 
 let adminInitialized = false;
 
+// NOVO: Função para carregar voluntários do servidor
+async function loadVolunteersFromDatabase() {
+  const container = document.getElementById("volunteers-list");
+  if (container) {
+    // Mensagem de carregamento
+    container.innerHTML =
+      "<p style='text-align: center; padding: 20px;'>Carregando voluntários do banco de dados...</p>";
+  }
+
+  try {
+    const res = await fetch("/voluntarios");
+    if (!res.ok) throw new Error("Falha ao carregar voluntários do servidor.");
+
+    // Atualiza o AppState com dados do DB
+    AppState.volunteers = await res.json();
+    localStorage.setItem("volunteers", JSON.stringify(AppState.volunteers));
+  } catch (error) {
+    console.error("Erro ao carregar voluntários:", error);
+    if (container) {
+      container.innerHTML = `<p style='text-align: center; padding: 20px; color: var(--error-color);'>Erro ao carregar voluntários. Verifique o servidor.</p>`;
+    }
+  }
+}
+
 function initAdminPanel() {
   const adminPage = document.querySelector('[data-page="admin"]');
   if (!adminPage || adminPage.classList.contains("hidden")) {
@@ -21,7 +45,11 @@ function initAdminPanel() {
   }
 
   adminInitialized = true;
-  renderAdminPanel();
+
+  // NOVO: Carrega os voluntários do DB antes de renderizar
+  loadVolunteersFromDatabase().then(() => {
+    renderAdminPanel();
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -65,7 +93,10 @@ function renderAdminPanel() {
       if (tabName === "enrollments") {
         renderEnrollmentsList();
       } else if (tabName === "volunteers") {
-        renderVolunteersList();
+        // NOVO: Garantir que a lista seja recarregada do DB ao trocar de aba
+        loadVolunteersFromDatabase().then(() => {
+          renderVolunteersList();
+        });
       }
     });
   });
@@ -84,6 +115,20 @@ function renderAdminPanel() {
   if (createVolunteerForm) {
     createVolunteerForm.removeEventListener("submit", handleCreateVolunteer);
     createVolunteerForm.addEventListener("submit", handleCreateVolunteer);
+
+    // Adicionar ajuda ao campo ID
+    const userIdInput = document.getElementById("volunteer-user-id");
+    if (userIdInput && !userIdInput.dataset.helpAdded) {
+      userIdInput.dataset.helpAdded = "true";
+      const helpText = document.createElement("small");
+      helpText.style.display = "block";
+      helpText.style.marginTop = "5px";
+      helpText.style.color = "var(--dark-gray)";
+      helpText.style.fontSize = "13px";
+      helpText.innerHTML =
+        "💡 <strong>Dica:</strong> Para encontrar o ID de um usuário, você pode verificá-lo no email de cadastro ou consultar diretamente no banco de dados.";
+      userIdInput.parentElement.appendChild(helpText);
+    }
   }
 }
 
@@ -217,42 +262,147 @@ function renderVolunteersList() {
   const table = document.createElement("table");
   table.style.width = "100%";
   table.style.borderCollapse = "collapse";
+  table.style.marginTop = "10px";
 
   const header = table.createTHead();
   const headerRow = header.insertRow();
-  ["Nome", "Departamento", "Especialização", "Data de Entrada"].forEach(
-    (text) => {
-      const cell = headerRow.insertCell();
-      cell.textContent = text;
-      cell.style.padding = "12px";
-      cell.style.borderBottom = "2px solid var(--primary-color)";
-      cell.style.fontWeight = "bold";
-      cell.style.backgroundColor = "var(--primary-light)";
-    }
-  );
+  [
+    "ID",
+    "Nome",
+    "Email",
+    "Departamento",
+    "Especialização",
+    "Data de Entrada",
+    "Ações",
+  ].forEach((text) => {
+    const cell = headerRow.insertCell();
+    cell.textContent = text;
+    cell.style.padding = "12px";
+    cell.style.borderBottom = "2px solid var(--primary-color)";
+    cell.style.fontWeight = "bold";
+    cell.style.backgroundColor = "var(--primary-light)";
+    cell.style.textAlign = "left";
+  });
 
   const body = table.createTBody();
   AppState.volunteers.forEach((volunteer) => {
-    const user = AppState.users.find((u) => u.id === volunteer.userId);
-
     const row = body.insertRow();
     row.style.borderBottom = "1px solid var(--medium-gray)";
+    row.style.transition = "background-color 0.2s";
+
+    // Efeito hover
+    row.addEventListener("mouseenter", () => {
+      row.style.backgroundColor = "var(--light-gray)";
+    });
+    row.addEventListener("mouseleave", () => {
+      row.style.backgroundColor = "transparent";
+    });
 
     const cells = [
-      user?.name || "Desconhecido",
-      volunteer.department || "-",
-      volunteer.specialization || "-",
-      new Date(volunteer.joinDate).toLocaleDateString("pt-BR"),
+      volunteer.userId || "N/A",
+      volunteer.userName || "Não informado",
+      volunteer.userEmail || "Não informado",
+      volunteer.department || "Não especificado",
+      volunteer.specialization || "Não especificado",
+      new Date(volunteer.joinDate).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }),
     ];
 
-    cells.forEach((text) => {
+    cells.forEach((text, index) => {
       const cell = row.insertCell();
       cell.textContent = text;
       cell.style.padding = "12px";
+      cell.style.textAlign = "left";
+
+      // Email em fonte menor
+      if (index === 2) {
+        cell.style.fontSize = "14px";
+        cell.style.color = "var(--dark-gray)";
+      }
     });
+
+    // Célula de ações (botão remover)
+    const actionCell = row.insertCell();
+    actionCell.style.padding = "12px";
+    actionCell.style.textAlign = "center";
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remover";
+    removeBtn.className = "btn btn-secondary";
+    removeBtn.style.padding = "6px 12px";
+    removeBtn.style.fontSize = "14px";
+    removeBtn.style.backgroundColor = "var(--error-color)";
+    removeBtn.style.color = "white";
+    removeBtn.onclick = () => removeVolunteer(volunteer.id);
+
+    actionCell.appendChild(removeBtn);
   });
 
   container.appendChild(table);
+
+  // Adicionar contagem
+  const count = document.createElement("p");
+  count.style.marginTop = "15px";
+  count.style.fontSize = "14px";
+  count.style.color = "var(--dark-gray)";
+  count.style.textAlign = "right";
+  count.textContent = `Total de voluntários: ${AppState.volunteers.length}`;
+  container.appendChild(count);
+}
+
+// CORRIGIDO: Agora chama a API DELETE para remover do banco de dados
+function removeVolunteer(volunteerId) {
+  if (!confirm("Deseja realmente remover este voluntário?")) {
+    return;
+  }
+
+  const volunteer = AppState.volunteers.find((v) => v.id === volunteerId);
+
+  if (!volunteer) {
+    showAlert("Voluntário não encontrado!", "error");
+    return;
+  }
+
+  // 1. Faz a chamada DELETE para o servidor
+  fetch(`/voluntarios/${volunteerId}`, {
+    method: "DELETE",
+  })
+    .then(async (res) => {
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        showAlert(
+          errorData.erro || "Erro ao remover voluntário do servidor.",
+          "error"
+        );
+        return;
+      }
+
+      // 2. Se a remoção no servidor foi bem-sucedida, atualiza o estado local
+      const volunteerIndex = AppState.volunteers.findIndex(
+        (v) => v.id === volunteerId
+      );
+
+      if (volunteerIndex !== -1) {
+        AppState.volunteers.splice(volunteerIndex, 1);
+        localStorage.setItem("volunteers", JSON.stringify(AppState.volunteers));
+      }
+
+      // 3. Recarrega a lista para garantir a consistência e atualiza a UI
+      loadVolunteersFromDatabase().then(() => {
+        renderVolunteersList();
+        showAlert(
+          `Voluntário ${volunteer.userName || "removido"} com sucesso!`,
+          "success"
+        );
+      });
+    })
+    .catch((error) => {
+      console.error("Erro na comunicação com o servidor ao deletar:", error);
+      showAlert("Erro de rede ao tentar remover voluntário.", "error");
+    });
 }
 
 function handleCreateWorkshop(e) {
@@ -315,7 +465,8 @@ function handleCreateWorkshop(e) {
     });
 }
 
-function handleCreateVolunteer(e) {
+// CORRIGIDO: handleCreateVolunteer agora usa POST /voluntarios
+async function handleCreateVolunteer(e) {
   e.preventDefault();
   const userId = parseInt(document.getElementById("volunteer-user-id").value);
   const department = document.getElementById("volunteer-department").value;
@@ -323,33 +474,62 @@ function handleCreateVolunteer(e) {
     "volunteer-specialization"
   ).value;
 
-  const user = AppState.users.find((u) => u.id === userId);
-  if (!user) {
-    showAlert("Usuário não encontrado!", "error");
+  if (!userId || isNaN(userId)) {
+    showAlert("Por favor, informe um ID de usuário válido!", "error");
     return;
   }
 
-  const existingVolunteer = AppState.volunteers.find(
-    (v) => v.userId === userId
-  );
-  if (existingVolunteer) {
-    showAlert("Este usuário já está cadastrado como voluntário!", "error");
-    return;
+  try {
+    // 1. Verificar se o usuário existe no banco de dados (API: /usuarios/:id)
+    const userRes = await fetch(`/usuarios/${userId}`);
+
+    if (!userRes.ok) {
+      showAlert("Usuário não encontrado no sistema!", "error");
+      return;
+    }
+
+    const user = await userRes.json();
+
+    // 2. Enviar dados do novo voluntário para o servidor (API: POST /voluntarios)
+    const volunteerData = {
+      userId: user.id,
+      department: department || "Não especificado",
+      specialization: specialization || "Não especificado",
+    };
+
+    const createRes = await fetch("/voluntarios", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(volunteerData),
+    });
+
+    const createData = await createRes.json();
+
+    if (!createRes.ok) {
+      if (createRes.status === 409) {
+        showAlert("Este usuário já está cadastrado como voluntário!", "error");
+      } else {
+        showAlert(
+          createData.erro || "Erro ao cadastrar voluntário no servidor.",
+          "error"
+        );
+      }
+      return;
+    }
+
+    // 3. Se o cadastro for bem-sucedido, recarregar a lista do banco de dados
+    await loadVolunteersFromDatabase();
+
+    document.getElementById("create-volunteer-form").reset();
+    renderVolunteersList();
+    showAlert(
+      `Voluntário ${user.nome || user.name} cadastrado com sucesso!`,
+      "success"
+    );
+  } catch (error) {
+    console.error("Erro ao cadastrar voluntário:", error);
+    showAlert("Erro ao cadastrar voluntário. Tente novamente.", "error");
   }
-
-  const newVolunteer = {
-    id: AppState.volunteers.length + 1,
-    userId,
-    department,
-    specialization,
-    joinDate: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-  };
-
-  AppState.volunteers.push(newVolunteer);
-  localStorage.setItem("volunteers", JSON.stringify(AppState.volunteers));
-
-  document.getElementById("create-volunteer-form").reset();
-  renderVolunteersList();
-  showAlert("Voluntário cadastrado com sucesso!", "success");
 }

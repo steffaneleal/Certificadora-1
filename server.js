@@ -431,6 +431,165 @@ app.delete("/inscricoes/:id", (req, res) => {
   });
 });
 
+// ==================== ROTAS DE VOLUNTÁRIOS ====================
+
+// Listar todos os voluntários
+app.get("/voluntarios", (req, res) => {
+  const query = `
+    SELECT
+      v.id,
+      v.departamento AS department,
+      v.especializacao AS specialization,
+      v.data_adesao AS joinDate,
+      u.id AS userId,
+      u.nome AS userName,
+      u.email AS userEmail
+    FROM voluntarios v
+    JOIN usuarios u ON v.usuario_id = u.id
+    ORDER BY v.data_adesao DESC;
+  `;
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Erro ao listar voluntários:", err);
+      return res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+    // Formata o resultado para o formato esperado pelo frontend
+    res.json(
+      results.map((v) => ({
+        id: v.id, // ID da tabela de voluntarios
+        userId: v.userId, // ID do usuário
+        userName: v.userName,
+        userEmail: v.userEmail,
+        department: v.department,
+        specialization: v.specialization,
+        joinDate: new Date(v.joinDate).toISOString(),
+        createdAt: new Date(v.joinDate).toISOString(), // Usado como fallback
+      }))
+    );
+  });
+});
+
+// Cadastrar novo voluntário
+app.post("/voluntarios", (req, res) => {
+  const { userId, department, specialization } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ erro: "ID do usuário é obrigatório" });
+  }
+
+  // 1. Verificar se o usuário já é voluntário
+  db.query(
+    "SELECT * FROM voluntarios WHERE usuario_id = ?",
+    [userId],
+    (err, results) => {
+      if (err) {
+        console.error("DB error on checking volunteer:", err);
+        return res.status(500).json({ erro: "Erro interno do servidor" });
+      }
+
+      if (results.length > 0) {
+        return res
+          .status(409)
+          .json({ erro: "Este usuário já está cadastrado como voluntário" });
+      }
+
+      // 2. Criar novo voluntário
+      const query =
+        "INSERT INTO voluntarios (usuario_id, departamento, especializacao) VALUES (?, ?, ?)";
+      db.query(
+        query,
+        [
+          userId,
+          department || "Não especificado",
+          specialization || "Não especificado",
+        ],
+        (err, result) => {
+          if (err) {
+            console.error("Erro ao cadastrar voluntário:", err);
+            return res
+              .status(500)
+              .json({ erro: "Erro ao cadastrar voluntário" });
+          }
+
+          // 3. Atualizar o tipo do usuário para 'instrutor' se for o caso
+          db.query(
+            "UPDATE usuarios SET tipo = 'instrutor' WHERE id = ? AND tipo != 'admin'",
+            [userId],
+            (updateErr) => {
+              if (updateErr) {
+                console.warn(
+                  "Aviso: Falha ao atualizar tipo do usuário para 'instrutor'.",
+                  updateErr
+                );
+              }
+
+              // Sucesso no cadastro
+              res.status(201).json({
+                mensagem: "Voluntário cadastrado com sucesso",
+                id: result.insertId,
+              });
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
+// Deletar voluntário por ID (FIX PARA REMOÇÃO PERSISTENTE)
+app.delete("/voluntarios/:id", (req, res) => {
+  const { id } = req.params; // ID da tabela voluntarios
+
+  // 1. Obter o usuario_id do voluntário a ser deletado
+  db.query(
+    "SELECT usuario_id FROM voluntarios WHERE id = ?",
+    [id],
+    (selectErr, selectResults) => {
+      if (selectErr) {
+        console.error("Erro ao buscar usuario_id do voluntário:", selectErr);
+        // Não interrompe, continua a tentar deletar o voluntário
+      }
+
+      const usuarioId =
+        selectResults.length > 0 ? selectResults[0].usuario_id : null;
+
+      // 2. Deletar o registro da tabela 'voluntarios'
+      db.query(
+        "DELETE FROM voluntarios WHERE id = ?",
+        [id],
+        (deleteErr, result) => {
+          if (deleteErr) {
+            console.error("Erro ao deletar voluntário:", deleteErr);
+            return res.status(500).json({ erro: "Erro ao deletar voluntário" });
+          }
+
+          if (result.affectedRows === 0) {
+            return res.status(404).json({ erro: "Voluntário não encontrado" });
+          }
+
+          // 3. Opcional: Se o usuário foi encontrado, reverter o tipo para 'aluno'
+          if (usuarioId) {
+            db.query(
+              "UPDATE usuarios SET tipo = 'aluno' WHERE id = ? AND tipo != 'admin'",
+              [usuarioId],
+              (updateErr) => {
+                if (updateErr) {
+                  console.warn(
+                    "Aviso: Falha ao reverter tipo do usuário para 'aluno'.",
+                    updateErr
+                  );
+                }
+              }
+            );
+          }
+
+          res.json({ mensagem: "Voluntário deletado com sucesso" });
+        }
+      );
+    }
+  );
+});
+
 // ==================== ROTAS DE REDIRECIONAMENTO ====================
 
 app.get("/login", (req, res) => res.redirect("/login.html"));

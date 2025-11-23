@@ -42,6 +42,17 @@ CREATE TABLE IF NOT EXISTS inscricoes (
   INDEX idx_oficina (oficina_id)
 );
 
+/* Tabela de voluntarios */
+CREATE TABLE IF NOT EXISTS voluntarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL UNIQUE,
+  departamento VARCHAR(100),
+  especializacao VARCHAR(100),
+  data_adesao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  INDEX idx_departamento (departamento)
+);
+
 /* Teste */
 INSERT INTO usuarios (nome, email, senha, tipo) VALUES
 ('Admin TEDI', 'admin@tedi.com', '$2b$10$X5S3sbkAg1MTiqZOGxpGyO3mgb45xVIIXIKfZ2JeYdXgKMklDgKLS', 'admin'), -- senha admin123
