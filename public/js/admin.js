@@ -16,7 +16,6 @@ function initAdminPanel() {
       "Acesso negado! Apenas administradores podem acessar esta página.",
       "error"
     );
-
     window.location.href = "index.html";
     return;
   }
@@ -61,72 +60,146 @@ function renderAdminPanel() {
       document
         .querySelector(`[data-admin-content="${tabName}"]`)
         ?.classList.remove("hidden");
+
+      // Recarregar dados ao trocar de aba
+      if (tabName === "enrollments") {
+        renderEnrollmentsList();
+      } else if (tabName === "volunteers") {
+        renderVolunteersList();
+      }
     });
   });
 
+  // Renderizar lista inicial
   renderEnrollmentsList();
   renderVolunteersList();
 
   const createWorkshopForm = document.getElementById("create-workshop-form");
   if (createWorkshopForm) {
+    createWorkshopForm.removeEventListener("submit", handleCreateWorkshop);
     createWorkshopForm.addEventListener("submit", handleCreateWorkshop);
   }
 
   const createVolunteerForm = document.getElementById("create-volunteer-form");
   if (createVolunteerForm) {
+    createVolunteerForm.removeEventListener("submit", handleCreateVolunteer);
     createVolunteerForm.addEventListener("submit", handleCreateVolunteer);
   }
 }
 
-function renderEnrollmentsList() {
+async function renderEnrollmentsList() {
   const container = document.getElementById("enrollments-list");
   if (!container) return;
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "<p style='text-align: center; padding: 20px;'>Carregando inscrições...</p>";
 
-  if (AppState.enrollments.length === 0) {
-    container.innerHTML = "<p>Nenhuma inscrição registrada.</p>";
-    return;
-  }
+  try {
+    // Buscar todas as inscrições do servidor
+    const res = await fetch("/inscricoes");
 
-  const table = document.createElement("table");
-  table.style.width = "100%";
-  table.style.borderCollapse = "collapse";
+    if (!res.ok) {
+      throw new Error("Erro ao buscar inscrições");
+    }
 
-  const header = table.createTHead();
-  const headerRow = header.insertRow();
-  ["Usuário", "Oficina", "Data de Inscrição"].forEach((text) => {
-    const cell = headerRow.insertCell();
-    cell.textContent = text;
-    cell.style.padding = "12px";
-    cell.style.borderBottom = "2px solid var(--primary-color)";
-    cell.style.fontWeight = "bold";
-  });
+    const inscricoes = await res.json();
 
-  const body = table.createTBody();
-  AppState.enrollments.forEach((enrollment) => {
-    const user = AppState.users.find((u) => u.id === enrollment.userId);
-    const workshop = AppState.workshops.find(
-      (w) => w.id === enrollment.workshopId
-    );
+    container.innerHTML = "";
 
-    const row = body.insertRow();
-    row.style.borderBottom = "1px solid var(--medium-gray)";
+    if (!inscricoes || inscricoes.length === 0) {
+      container.innerHTML =
+        "<p style='text-align: center; padding: 20px; color: var(--dark-gray);'>Nenhuma inscrição registrada no momento.</p>";
+      return;
+    }
 
-    const cells = [
-      user?.name || "Desconhecido",
-      workshop?.title || "Desconhecida",
-      new Date(enrollment.enrolledAt).toLocaleDateString("pt-BR"),
-    ];
+    // Criar tabela
+    const table = document.createElement("table");
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+    table.style.marginTop = "10px";
 
-    cells.forEach((text) => {
-      const cell = row.insertCell();
+    // Cabeçalho
+    const header = table.createTHead();
+    const headerRow = header.insertRow();
+    ["Usuário", "Email", "Oficina", "Data de Inscrição"].forEach((text) => {
+      const cell = headerRow.insertCell();
       cell.textContent = text;
       cell.style.padding = "12px";
+      cell.style.borderBottom = "2px solid var(--primary-color)";
+      cell.style.fontWeight = "bold";
+      cell.style.backgroundColor = "var(--primary-light)";
+      cell.style.textAlign = "left";
     });
-  });
 
-  container.appendChild(table);
+    // Corpo da tabela
+    const body = table.createTBody();
+    inscricoes.forEach((inscricao) => {
+      const row = body.insertRow();
+      row.style.borderBottom = "1px solid var(--medium-gray)";
+      row.style.transition = "background-color 0.2s";
+
+      // Efeito hover
+      row.addEventListener("mouseenter", () => {
+        row.style.backgroundColor = "var(--light-gray)";
+      });
+      row.addEventListener("mouseleave", () => {
+        row.style.backgroundColor = "transparent";
+      });
+
+      const cells = [
+        inscricao.usuario_nome || "Não informado",
+        inscricao.usuario_email || "Não informado",
+        inscricao.oficina_titulo || "Não informado",
+        new Date(inscricao.data_inscricao).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      ];
+
+      cells.forEach((text, index) => {
+        const cell = row.insertCell();
+        cell.textContent = text;
+        cell.style.padding = "12px";
+        cell.style.textAlign = "left";
+
+        // Email em fonte menor
+        if (index === 1) {
+          cell.style.fontSize = "14px";
+          cell.style.color = "var(--dark-gray)";
+        }
+      });
+    });
+
+    container.appendChild(table);
+
+    // Adicionar contagem
+    const count = document.createElement("p");
+    count.style.marginTop = "15px";
+    count.style.fontSize = "14px";
+    count.style.color = "var(--dark-gray)";
+    count.style.textAlign = "right";
+    count.textContent = `Total de inscrições: ${inscricoes.length}`;
+    container.appendChild(count);
+  } catch (error) {
+    console.error("Erro ao carregar inscrições:", error);
+    container.innerHTML = `
+      <div style="padding: 20px; text-align: center;">
+        <p style="color: var(--error-color); margin-bottom: 10px;">
+          <i class="fas fa-exclamation-triangle"></i> 
+          Erro ao carregar inscrições
+        </p>
+        <p style="font-size: 14px; color: var(--dark-gray);">
+          Por favor, verifique sua conexão e tente novamente.
+        </p>
+        <button onclick="renderEnrollmentsList()" class="btn btn-primary" style="margin-top: 15px;">
+          Tentar Novamente
+        </button>
+      </div>
+    `;
+  }
 }
 
 function renderVolunteersList() {
@@ -136,7 +209,8 @@ function renderVolunteersList() {
   container.innerHTML = "";
 
   if (AppState.volunteers.length === 0) {
-    container.innerHTML = "<p>Nenhum voluntário registrado.</p>";
+    container.innerHTML =
+      "<p style='text-align: center; padding: 20px; color: var(--dark-gray);'>Nenhum voluntário registrado.</p>";
     return;
   }
 
@@ -153,6 +227,7 @@ function renderVolunteersList() {
       cell.style.padding = "12px";
       cell.style.borderBottom = "2px solid var(--primary-color)";
       cell.style.fontWeight = "bold";
+      cell.style.backgroundColor = "var(--primary-light)";
     }
   );
 
@@ -228,9 +303,11 @@ function handleCreateWorkshop(e) {
       localStorage.setItem("workshops", JSON.stringify(AppState.workshops));
       document.getElementById("create-workshop-form").reset();
       showAlert("Oficina criada com sucesso!", "success");
-      if (window.location.pathname.includes("oficinas.html")) {
-        setTimeout(() => window.location.reload(), 800);
-      }
+
+      // Recarregar a página após 1 segundo
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     })
     .catch((err) => {
       console.error(err);

@@ -326,7 +326,33 @@ app.delete("/oficinas/:id", (req, res) => {
 
 // ==================== ROTAS DE INSCRIÇÕES ====================
 
-// Listar inscrições de um usuário
+// Listar TODAS as inscrições (para admin)
+app.get("/inscricoes", (req, res) => {
+  const query = `
+    SELECT 
+      i.id,
+      i.usuario_id,
+      i.oficina_id,
+      i.data_inscricao,
+      u.nome as usuario_nome,
+      u.email as usuario_email,
+      o.titulo as oficina_titulo
+    FROM inscricoes i
+    JOIN usuarios u ON i.usuario_id = u.id
+    JOIN oficinas o ON i.oficina_id = o.id
+    ORDER BY i.data_inscricao DESC
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Erro ao buscar inscrições:", err);
+      return res.status(500).json({ erro: "Erro no servidor" });
+    }
+    res.json(results);
+  });
+});
+
+// Listar inscrições de um usuário específico
 app.get("/inscricoes/usuario/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
 
@@ -405,9 +431,13 @@ app.delete("/inscricoes/:id", (req, res) => {
   });
 });
 
+// ==================== ROTAS DE REDIRECIONAMENTO ====================
+
 app.get("/login", (req, res) => res.redirect("/login.html"));
 app.get("/cadastro", (req, res) => res.redirect("/cadastro.html"));
 app.get("/", (req, res) => res.redirect("/index.html"));
+
+// ==================== INICIALIZAÇÃO ====================
 
 if (require.main === module) {
   app.listen(PORT, () => {
